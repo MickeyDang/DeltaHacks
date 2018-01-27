@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "293057801175",
+    "firebase_url": "https://deltahacks-62431.firebaseio.com",
+    "project_id": "deltahacks-62431",
+    "storage_bucket": "deltahacks-62431.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293057801175:android:f8da54d8c9b4b0f5",
+        "android_client_info": {
+          "package_name": "mdstudios.deltahacks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293057801175-i73kne8qtcjvffq4kfvql2sqp536bag9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx_khBrm8wJ_NO__fKl52NeC-ANsviIR0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

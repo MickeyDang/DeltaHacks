@@ -1,5 +1,8 @@
 package mdstudios.deltahacks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.EditText;
 
 /**
@@ -18,11 +21,15 @@ public class LoginHandler {
     }
 
     public String getPassword(EditText et) {
-
-        return null;
+        return et.getText().toString();
     }
 
-    public void saveToSharedPrefs(String name, String password) {
+    public void saveToSharedPrefs(Context c, String name, String password) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        prefs.edit().putString("name", name).apply();
+        prefs.edit().putString("password", password).apply();
+
 
     }
 
