@@ -14,10 +14,11 @@ public class LoginHandler {
     }
 
     public String getName(EditText et) {
-        return null;
+        return et.getText().toString();
     }
 
     public String getPassword(EditText et) {
+
         return null;
     }
 
