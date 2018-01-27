@@ -23,11 +23,11 @@ public class CheckIn extends AppCompatActivity {
         final CommunicationClient cc = new CommunicationClient();
 
 
-
         mCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cc.textToServerPhone(makePI());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                cc.textToServerPhone(makePI(), prefs.getString("name", "anon"));
             }
         });
 

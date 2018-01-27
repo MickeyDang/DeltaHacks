@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -19,8 +20,8 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
  */
 
 public class CommunicationClient {
-
-    private final String TEXT_MESSAGE = "new sign in detected";
+    private final String LOG_TAG = this.getClass().getSimpleName();
+    private final String TEXT_MESSAGE = "new sign in detected from: ";
 
     public CommunicationClient() {
 
@@ -37,11 +38,10 @@ public class CommunicationClient {
 
     }
 
-    public void textToServerPhone(PendingIntent pi) {
-
-
+    public void textToServerPhone(PendingIntent pi, String name) {
+        Log.d(LOG_TAG, "sending text!");
         SmsManager manager = SmsManager.getDefault();
-        manager.sendTextMessage(Utils.SERVER_NUMBER, null, TEXT_MESSAGE, pi, null);
+        manager.sendTextMessage(Utils.SERVER_NUMBER, null, TEXT_MESSAGE + name, pi, null);
 
     }
 
