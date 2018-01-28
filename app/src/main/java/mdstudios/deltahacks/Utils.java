@@ -8,8 +8,11 @@ import java.util.UUID;
 
 public class Utils {
 
-//    public static UUID LED_CB_ID = ;
     public static String SHIELD_ID = "abc";
     public static String SERVER_NUMBER = "6476778415";
+    public static String STATUS_KEY = "isSignedIn";
+    public static String NAME_KEY = "name";
+    public static String LOC_KEY = "location";
+
 
 }

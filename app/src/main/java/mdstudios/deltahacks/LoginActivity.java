@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,10 +40,16 @@ public class LoginActivity extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handler.saveToSharedPrefs(getApplicationContext(),
-                        handler.getName(mName),
-                        handler.getPassword(mPassword));
-                goToCheckout();
+                if(handler.allFieldsFilled(mName, mPassword)) {
+                    handler.saveToSharedPrefs(getApplicationContext(),
+                            handler.getName(mName),
+                            handler.getPassword(mPassword));
+                    goToCheckout();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not all fields filled!", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
             }
         });
     }

@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
@@ -21,7 +22,6 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class CommunicationClient {
     private final String LOG_TAG = this.getClass().getSimpleName();
-    private final String TEXT_MESSAGE = "new sign in detected from: ";
 
     public CommunicationClient() {
 
@@ -38,10 +38,13 @@ public class CommunicationClient {
 
     }
 
-    public void textToServerPhone(PendingIntent pi, String name) {
+    public void textToServerPhone(Bundle bundle) {
         Log.d(LOG_TAG, "sending text!");
         SmsManager manager = SmsManager.getDefault();
-        manager.sendTextMessage(Utils.SERVER_NUMBER, null, TEXT_MESSAGE + name, pi, null);
+        String message = bundle.getString(Utils.NAME_KEY) + ","
+                + bundle.getString(Utils.STATUS_KEY) + ","
+                + bundle.getString(Utils.LOC_KEY);
+        manager.sendTextMessage(Utils.SERVER_NUMBER, null, message, null, null);
 
     }
 

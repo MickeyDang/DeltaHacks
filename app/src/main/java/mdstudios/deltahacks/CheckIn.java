@@ -26,18 +26,18 @@ public class CheckIn extends AppCompatActivity {
         mCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                cc.textToServerPhone(makePI(), prefs.getString("name", "anon"));
+                cc.textToServerPhone(makeBundle());
             }
         });
 
     }
 
-    private PendingIntent makePI() {
+    private Bundle makeBundle() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Intent intent = new Intent();
-        intent.putExtra("name", prefs.getString("name", "Mickey"));
-        intent.putExtra("signedIn", true);
-        return PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+        Bundle bundle = new Bundle();
+        bundle.putString(Utils.NAME_KEY, prefs.getString("name", "Mickey"));
+        bundle.putString(Utils.STATUS_KEY, "true");
+        bundle.putString(Utils.LOC_KEY, "E5 Room 6008");
+        return bundle;
     }
 }

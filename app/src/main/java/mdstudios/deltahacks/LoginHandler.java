@@ -33,6 +33,10 @@ public class LoginHandler {
 
     }
 
+    public boolean allFieldsFilled(EditText et1, EditText et2) {
+        return(!et1.getText().toString().isEmpty() && !et2.getText().toString().isEmpty());
+    }
+
     public void saveToFirebase(String name, String password) {
 
     }
