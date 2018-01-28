@@ -2,7 +2,6 @@ package mdstudios.deltahacks;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,40 +17,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import mdstudios.deltahacks.dummy.DummyContent;
+import mdstudios.deltahacks.dummy.DummyContent.DummyItem;
 
-
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class LocationFragment extends Fragment {
 
-    private final String LOG_TAG = this.getClass().getSimpleName();
+public class FriendFragment extends Fragment {
+
+    private List<User> mUsers = new ArrayList<>();
+    private Map<String, User> mUserMap = new HashMap<>();
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private MyFriendRecyclerViewAdapter mAdapter;
 
-    private Map<String, Location> mLocationMap = new HashMap<>();
-    private List<Location> mLocations = new ArrayList<>();
-    private MyLocationRecyclerViewAdapter mAdapter;
-
-    public LocationFragment() {
+    public FriendFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static LocationFragment newInstance(int columnCount) {
-        LocationFragment fragment = new LocationFragment();
+    public static FriendFragment newInstance(int columnCount) {
+        FriendFragment fragment = new FriendFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -70,9 +61,9 @@ public class LocationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_location_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
 
-//        mAdapter = new MyLocationRecyclerViewAdapter(mLocations, mListener, getContext());
+        mAdapter = new MyFriendRecyclerViewAdapter(mUsers, mListener, getContext());
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -83,15 +74,14 @@ public class LocationFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-//            recyclerView.setAdapter(mAdapter);
+            recyclerView.setAdapter(mAdapter);
         }
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onResume() {
+        super.onResume();
         loadData();
     }
 
@@ -112,35 +102,21 @@ public class LocationFragment extends Fragment {
         mListener = null;
     }
 
-    private void loadData() {
+    public void loadData() {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("location");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d(LOG_TAG, "child added");
-                Location loc = new Location(dataSnapshot.getKey(),
-                         //weird hack bc db stores capacity as long
-                         Integer.valueOf(String.valueOf(dataSnapshot.child("capacity").getValue())),
-                        (String) dataSnapshot.child("status").getValue(),
-                        Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue())));
-                mLocationMap.put(dataSnapshot.getKey(), loc);
+                User user = new User(dataSnapshot.getKey(), (String) dataSnapshot.child("location").getValue());
+                mUserMap.put(dataSnapshot.getKey(), user);
                 updateAdapter();
-
-                //Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue()))
-
-                //Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue()))
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Location loc = new Location(dataSnapshot.getKey(),
-                        //weird hack bc db stores capacity as long
-                        Integer.valueOf(String.valueOf(dataSnapshot.child("capacity").getValue())),
-                        (String) dataSnapshot.child("status").getValue(),
-                        Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue())));
-                mLocationMap.put(dataSnapshot.getKey(), loc);
-
+                User user = new User(dataSnapshot.getKey(), (String) dataSnapshot.child("location").getValue());
+                mUserMap.put(dataSnapshot.getKey(), user);
                 updateAdapter();
             }
 
@@ -164,11 +140,12 @@ public class LocationFragment extends Fragment {
 
 
     private void updateAdapter() {
-        mAdapter.updateList(mLocationMap.values());
-        Log.d(LOG_TAG, "updating list");
+        mAdapter.updateList(mUserMap.values());
+
     }
 
     public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onListFragmentInteraction();
     }
 }

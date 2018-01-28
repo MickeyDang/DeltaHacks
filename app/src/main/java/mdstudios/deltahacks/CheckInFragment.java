@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import mdstudios.deltahacks.BluetoothConnectionService;
@@ -37,6 +38,8 @@ public class CheckInFragment extends Fragment {
 
     BluetoothConnectionService mBluetoothConnection;
 
+    Button mScanButton;
+    ProgressBar mProgressBar;
 
     private final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private final String MAC_ADDRESS = "98:D3:31:FD:67:87";
@@ -67,6 +70,7 @@ public class CheckInFragment extends Fragment {
                 Log.d("TANJOT", device.getAddress());
                 if (device.getAddress().equals(MAC_ADDRESS)) {
                     mBTDevice = device;
+                    enableScan();
                 }
 
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
@@ -120,10 +124,13 @@ public class CheckInFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button scanButton = view.findViewById(R.id.scanButton);
+        mScanButton = view.findViewById(R.id.scanButton);
         final CommunicationClient cc = new CommunicationClient();
+        mProgressBar = view.findViewById(R.id.loadingIcon);
 
-        scanButton.setOnClickListener(new View.OnClickListener() {
+        disableScan();
+
+        mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "button pressed");
@@ -155,47 +162,45 @@ public class CheckInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        getActivity().registerReceiver(mBroadcastReceiver4, filter);
-        IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        getActivity().registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
         checkBTPermissions();
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         if(mBluetoothAdapter.isDiscovering()){
             mBluetoothAdapter.cancelDiscovery();
-            Log.d(TAG, "btnDiscover: Canceling discovery.");
-
+//            Log.d(TAG, "btnDiscover: Canceling discovery.");
             //check BT permissions in manifest
-            checkBTPermissions();
-
+//            checkBTPermissions();
             mBluetoothAdapter.startDiscovery();
 
         }
         if(!mBluetoothAdapter.isDiscovering()){
 
             //check BT permissions in manifest
-            checkBTPermissions();
+//            checkBTPermissions();
 
             mBluetoothAdapter.startDiscovery();
         }
-
-
         mBluetoothConnection = new BluetoothConnectionService(getContext());
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
-
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        getActivity().registerReceiver(mBroadcastReceiver4, filter);
+        IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getActivity().registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
 
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
+    public void onPause() {
+        super.onPause();
         getActivity().unregisterReceiver(mBroadcastReceiver3);
         getActivity().unregisterReceiver(mBroadcastReceiver4);
     }
+
 
 
     @Override
@@ -230,6 +235,16 @@ public class CheckInFragment extends Fragment {
 
 
 
+    public void enableScan() {
+        mScanButton.setClickable(true);
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void disableScan() {
+        mScanButton.setClickable(false);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+    }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -254,7 +269,7 @@ public class CheckInFragment extends Fragment {
     }
 
     public void signalArduino(String name) {
-        String text = "A" + name;
+        String text = "A";
         byte[] bytes = text.getBytes(Charset.defaultCharset());
         Log.d(TAG, text);
 

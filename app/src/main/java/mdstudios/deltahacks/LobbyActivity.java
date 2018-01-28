@@ -20,7 +20,8 @@ import android.view.MenuItem;
 
 public class LobbyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CheckInFragment.OnFragmentInteractionListener,
-        LocationFragment.OnListFragmentInteractionListener{
+        LocationFragment.OnListFragmentInteractionListener, LocationListFragment.OnFragmentInteractionListener,
+        FriendFragment.OnListFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +86,9 @@ public class LobbyActivity extends AppCompatActivity
         } else if (id == R.id.nav_check_in) {
             goToFragment(new CheckInFragment());
         } else if (id == R.id.nav_location_list) {
-            goToFragment(new LocationFragment());
+            goToFragment(new LocationListFragment());
         } else if (id == R.id.nav_reading_groups) {
-
+            goToFragment(new FriendFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -123,4 +124,6 @@ public class LobbyActivity extends AppCompatActivity
         startActivity(intent);
         this.finish();
     }
+
+
 }

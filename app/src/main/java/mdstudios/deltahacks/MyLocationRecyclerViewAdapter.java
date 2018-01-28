@@ -22,10 +22,10 @@ public class MyLocationRecyclerViewAdapter extends RecyclerView.Adapter<MyLocati
     private final String LOG_TAG = this.getClass().getSimpleName();
 
     private List<Location> mLocations = new ArrayList<>();
-    private final OnListFragmentInteractionListener mListener;
+    private final LocationListFragment.OnFragmentInteractionListener mListener;
     private Context mContext;
 
-    public MyLocationRecyclerViewAdapter(List<Location> items, OnListFragmentInteractionListener listener, Context c) {
+    public MyLocationRecyclerViewAdapter(List<Location> items, LocationListFragment.OnFragmentInteractionListener listener, Context c) {
         mLocations = items;
         mListener = listener;
         mContext = c;
