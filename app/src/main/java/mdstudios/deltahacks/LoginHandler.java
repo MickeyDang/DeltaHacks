@@ -26,7 +26,7 @@ public class LoginHandler {
 
     public void saveToSharedPrefs(Context c, String name, String password) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = c.getSharedPreferences("package mdstudios.deltahacks", Context.MODE_PRIVATE);
         prefs.edit().putString("name", name).apply();
         prefs.edit().putString("password", password).apply();
 
