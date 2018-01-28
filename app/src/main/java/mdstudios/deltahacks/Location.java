@@ -16,4 +16,15 @@ public class Location {
         mCapacity = cap;
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    public int getPeople() {
+        return mPeople;
+    }
+
+    public String getCapacity() {
+        return mCapacity;
+    }
 }

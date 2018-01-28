@@ -1,5 +1,6 @@
 package mdstudios.deltahacks;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -80,11 +81,11 @@ public class LobbyActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_sign_out) {
-
+            signOut();
         } else if (id == R.id.nav_check_in) {
             goToFragment(new CheckInFragment());
         } else if (id == R.id.nav_location_list) {
-
+            goToFragment(new LocationFragment());
         } else if (id == R.id.nav_reading_groups) {
 
         }
@@ -115,5 +116,11 @@ public class LobbyActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction() {
 
+    }
+
+    private void signOut() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }
