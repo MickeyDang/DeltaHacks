@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mName = findViewById(R.id.name);
-        mPassword = findViewById(R.id.password);
         mSubmit = findViewById(R.id.signIn);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
@@ -40,11 +39,12 @@ public class LoginActivity extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(handler.allFieldsFilled(mName, mPassword)) {
+                if(handler.allFieldsFilled(mName)) {
                     handler.saveToSharedPrefs(getApplicationContext(),
-                            handler.getName(mName),
-                            handler.getPassword(mPassword));
+                            handler.getName(mName));
                     goToCheckout();
+
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Not all fields filled!", Toast.LENGTH_SHORT)
                             .show();

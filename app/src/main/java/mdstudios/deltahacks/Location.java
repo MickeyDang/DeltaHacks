@@ -9,11 +9,13 @@ public class Location {
     private String mName;
     private int mPeople;
     private String mCapacity;
+    private int mResourceID;
 
-    public Location (String name, int people, String cap) {
+    public Location (String name, int people, String cap, int res) {
         mName = name;
         mPeople = people;
         mCapacity = cap;
+        mResourceID = res;
     }
 
     public String getName() {
@@ -26,5 +28,9 @@ public class Location {
 
     public String getCapacity() {
         return mCapacity;
+    }
+
+    public int getResourceID() {
+        return mResourceID;
     }
 }

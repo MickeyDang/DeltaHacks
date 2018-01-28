@@ -73,7 +73,7 @@ public class LocationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location_list, container, false);
 
-        mAdapter = new MyLocationRecyclerViewAdapter(mLocations, mListener);
+        mAdapter = new MyLocationRecyclerViewAdapter(mLocations, mListener, getContext());
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -123,7 +123,8 @@ public class LocationFragment extends Fragment {
                 Location loc = new Location(dataSnapshot.getKey(),
                          //weird hack bc db stores capacity as long
                          Integer.valueOf(String.valueOf(dataSnapshot.child("capacity").getValue())),
-                        (String) dataSnapshot.child("status").getValue());
+                        (String) dataSnapshot.child("status").getValue(),
+                        Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue())));
                 mLocationMap.put(dataSnapshot.getKey(), loc);
 
                 updateAdapter();
@@ -134,7 +135,8 @@ public class LocationFragment extends Fragment {
                 Location loc = new Location(dataSnapshot.getKey(),
                         //weird hack bc db stores capacity as long
                         Integer.valueOf(String.valueOf(dataSnapshot.child("capacity").getValue())),
-                        (String) dataSnapshot.child("status").getValue());
+                        (String) dataSnapshot.child("status").getValue(),
+                        Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue())));
                 mLocationMap.put(dataSnapshot.getKey(), loc);
 
                 updateAdapter();

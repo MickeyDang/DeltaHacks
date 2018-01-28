@@ -24,17 +24,15 @@ public class LoginHandler {
         return et.getText().toString();
     }
 
-    public void saveToSharedPrefs(Context c, String name, String password) {
+    public void saveToSharedPrefs(Context c, String name) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         prefs.edit().putString("name", name).apply();
-        prefs.edit().putString("password", password).apply();
-
 
     }
 
-    public boolean allFieldsFilled(EditText et1, EditText et2) {
-        return(!et1.getText().toString().isEmpty() && !et2.getText().toString().isEmpty());
+    public boolean allFieldsFilled(EditText et1) {
+        return(!et1.getText().toString().isEmpty());
     }
 
     public void saveToFirebase(String name, String password) {
