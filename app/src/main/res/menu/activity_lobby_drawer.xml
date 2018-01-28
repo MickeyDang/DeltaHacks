@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+        <item
+            android:id="@+id/nav_check_in"
+            android:icon="@drawable/ic_checkin"
+            android:title="Check In"/>
+        <item
+            android:id="@+id/nav_location_list"
+            android:icon="@drawable/ic_location"
+            android:title="Locations"/>
+        <item
+            android:id="@+id/nav_reading_groups"
+            android:icon="@drawable/ic_groups"
+            android:title="Reading Groups"/>
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/ic_exit"
+            android:title="Sign Out"/>
+
+</menu>

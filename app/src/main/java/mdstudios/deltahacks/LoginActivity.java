@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToCheckout() {
-        Intent intent = new Intent(this, CheckIn.class);
+        Intent intent = new Intent(this, LobbyActivity.class);
         startActivity(intent);
     }
 }

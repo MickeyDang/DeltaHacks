@@ -23,6 +23,11 @@
         </activity>
         <activity android:name=".CheckIn">
         </activity>
+        <activity
+            android:name=".LobbyActivity"
+            android:label="@string/title_activity_lobby"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
