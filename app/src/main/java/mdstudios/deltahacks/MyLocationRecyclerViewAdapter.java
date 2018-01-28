@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import mdstudios.deltahacks.LocationFragment.OnListFragmentInteractionListener;
-import mdstudios.deltahacks.dummy.DummyContent.DummyItem;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +40,9 @@ public class MyLocationRecyclerViewAdapter extends RecyclerView.Adapter<MyLocati
         for (Location loc : mLocations) {
             Log.d(LOG_TAG, loc.getName());
         }
+
+//        FirebaseClient client = new FirebaseClient();
+//        client.sendInfoToDB(mLocations);
 
         notifyDataSetChanged();
     }

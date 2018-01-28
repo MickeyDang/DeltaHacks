@@ -18,8 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import mdstudios.deltahacks.dummy.DummyContent;
-import mdstudios.deltahacks.dummy.DummyContent.DummyItem;
+
 
 import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
@@ -126,8 +125,9 @@ public class LocationFragment extends Fragment {
                         (String) dataSnapshot.child("status").getValue(),
                         Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue())));
                 mLocationMap.put(dataSnapshot.getKey(), loc);
-
                 updateAdapter();
+
+                //Integer.valueOf(String.valueOf(dataSnapshot.child("imageID").getValue()))
             }
 
             @Override
